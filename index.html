@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="高佳顺 - 前端开发工程师，20年经验，专注Vue/Three.js/AI辅助开发">
+    <title>高佳顺 - 前端开发工程师</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --accent: #10b981;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+        .header-info h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 5px; }
+        .header-info .title { font-size: 1.2rem; opacity: 0.9; margin-bottom: 15px; }
+        .contact-list { display: flex; flex-wrap: wrap; gap: 20px; }
+        .contact-item { display: flex; align-items: center; gap: 8px; font-size: 0.95rem; }
+        .contact-item svg { width: 18px; height: 18px; opacity: 0.8; }
+
+        /* Section */
+        .section { background: var(--card); border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: var(--shadow); }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title svg { width: 24px; height: 24px; }
+
+        /* Advantages */
+        .advantage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .advantage-item {
+            padding: 15px;
+            background: var(--bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        .advantage-item strong { color: var(--primary); display: block; margin-bottom: 5px; }
+        .advantage-item p { color: var(--text-light); font-size: 0.9rem; }
+
+        /* Skills */
+        .skill-table { width: 100%; border-collapse: collapse; }
+        .skill-table th, .skill-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border); }
+        .skill-table th { background: var(--bg); font-weight: 600; color: var(--primary); width: 140px; }
+        .skill-table td { color: var(--text-light); }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-tag {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        .skill-tag.green { background: linear-gradient(135deg, var(--accent) 0%, #059669 100%); }
+
+        /* AI Section */
+        .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .ai-card { background: var(--bg); border-radius: 10px; padding: 20px; }
+        .ai-card h4 { color: var(--primary); margin-bottom: 12px; font-size: 1rem; }
+        .ai-card ul { list-style: none; }
+        .ai-card li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; color: var(--text-light); }
+        .ai-card li:last-child { border-bottom: none; }
+        .ai-card li strong { color: var(--text); }
+        .model-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 15px; }
+        .model-item { background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border); }
+        .model-item .vendor { font-size: 0.8rem; color: var(--text-light); margin-bottom: 5px; }
+        .model-item .models { font-weight: 500; color: var(--text); font-size: 0.9rem; }
+
+        /* Work Experience */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ''; position: absolute; left: 8px; top: 5px; bottom: 5px; width: 2px; background: var(--border); }
+        .timeline-item { position: relative; margin-bottom: 30px; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid white;
+            box-shadow: var(--shadow);
+        }
+        .timeline-item.current::before { background: var(--accent); }
+        .job-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+        .job-title { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+        .job-company { color: var(--primary); }
+        .job-date { color: var(--text-light); font-size: 0.9rem; }
+        .job-achievement { background: linear-gradient(90deg, rgba(16,185,129,0.1) 0%, transparent 100%); padding: 10px 15px; border-radius: 6px; margin: 10px 0; border-left: 3px solid var(--accent); }
+        .job-achievement strong { color: var(--accent); }
+        .job-list { list-style: none; }
+        .job-list li { padding: 5px 0; padding-left: 20px; position: relative; color: var(--text-light); font-size: 0.9rem; }
+        .job-list li::before { content: '▸'; position: absolute; left: 0; color: var(--primary); }
+        .highlight { background: linear-gradient(90deg, rgba(37,99,235,0.1) 0%, transparent 100%); padding: 2px 6px; border-radius: 4px; font-weight: 500; color: var(--primary); }
+        .badge { display: inline-block; background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-left: 5px; }
+
+        /* Early Career Table */
+        .early-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .early-table th, .early-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        .early-table th { background: var(--bg); font-weight: 600; color: var(--text); }
+        .early-table td { color: var(--text-light); }
+
+        /* Projects */
+        .project-grid { display: grid; gap: 20px; }
+        .project-card { background: var(--bg); border-radius: 10px; padding: 20px; border: 1px solid var(--border); transition: all 0.3s; }
+        .project-card:hover { border-color: var(--primary); box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+        .project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+        .project-name { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+        .project-date { color: var(--text-light); font-size: 0.85rem; }
+        .project-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .tech-tag { background: var(--primary); color: white; padding: 3px 10px; border-radius: 15px; font-size: 0.8rem; }
+        .project-desc { color: var(--text-light); font-size: 0.9rem; margin-bottom: 10px; }
+        .project-features { list-style: none; }
+        .project-features li { padding: 4px 0; font-size: 0.85rem; color: var(--text-light); }
+        .project-features li::before { content: '✓ '; color: var(--accent); font-weight: bold; }
+
+        /* Education */
+        .edu-card { display: flex; align-items: center; gap: 20px; padding: 20px; background: var(--bg); border-radius: 10px; }
+        .edu-icon { width: 60px; height: 60px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .edu-icon svg { width: 30px; height: 30px; fill: white; }
+        .edu-info h4 { font-size: 1.1rem; color: var(--text); margin-bottom: 5px; }
+        .edu-info p { color: var(--text-light); font-size: 0.9rem; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 30px; color: var(--text-light); font-size: 0.85rem; }
+
+        /* Print */
+        @media print {
+            body { background: white; font-size: 12px; }
+            .header { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .section { box-shadow: none; border: 1px solid var(--border); }
+            .project-card:hover { transform: none; }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header-content { justify-content: center; text-align: center; }
+            .header-info h1 { font-size: 2rem; }
+            .contact-list { justify-content: center; }
+            .job-header { flex-direction: column; }
+            .section { padding: 20px 15px; }
+        }
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="avatar">高</div>
+                <div class="header-info">
+                    <h1>高佳顺</h1>
+                    <div class="title">前端开发工程师 | 20年经验</div>
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            13752099426
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            670646790@qq.com
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            天津
+                        </div>
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                            期望薪资：15-25K
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <!-- 核心优势 -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                核心优势
+            </h2>
+            <div class="advantage-grid">
+                <div class="advantage-item">
+                    <strong>AI辅助开发</strong>
+                    <p>深度掌握Claude生态系统、MCP架构、主流大语言模型，将AI无缝集成至日常编码工作流，显著提升开发效率</p>
+                </div>
+                <div class="advantage-item">
+                    <strong>3D Web开发</strong>
+                    <p>6年+ Vue/Three.js 开发经验，主导多个医疗3D模拟项目，累计销售额超2000万</p>
+                </div>
+                <div class="advantage-item">
+                    <strong>医疗教育系统</strong>
+                    <p>深耕医学教育领域，熟悉临床思维训练、DICOM影像、诊疗流程等业务场景</p>
+                </div>
+                <div class="advantage-item">
+                    <strong>游戏开发</strong>
+                    <p>5年+ Cocos引擎开发经验，主导棋牌项目矩阵，2019年流水6000万</p>
+                </div>
+                <div class="advantage-item">
+                    <strong>全栈能力</strong>
+                    <p>熟悉前后端协作，具备Android/iOS双平台SDK集成经验</p>
+                </div>
+                <div class="advantage-item">
+                    <strong>团队管理</strong>
+                    <p>具备项目管理和团队建设经验，能独立带领开发团队</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技术栈 -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                技术栈
+            </h2>
+            <table class="skill-table">
+                <tr><th>核心技术</th><td><div class="skill-tags"><span class="skill-tag">Vue2/Vue3</span><span class="skill-tag">Three.js</span><span class="skill-tag">TypeScript</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Node.js</span></div></td></tr>
+                <tr><th>构建工具</th><td><div class="skill-tags"><span class="skill-tag">Vite</span><span class="skill-tag">Webpack</span></div></td></tr>
+                <tr><th>状态管理</th><td><div class="skill-tags"><span class="skill-tag">Pinia</span><span class="skill-tag">VueX</span></div></td></tr>
+                <tr><th>UI框架</th><td><div class="skill-tags"><span class="skill-tag">Element Plus</span><span class="skill-tag">自定义组件库</span></div></td></tr>
+                <tr><th>数据可视化</th><td><div class="skill-tags"><span class="skill-tag">ECharts</span><span class="skill-tag">Three.js</span></div></td></tr>
+                <tr><th>医学影像</th><td><div class="skill-tags"><span class="skill-tag green">Cornerstone.js (DICOM)</span></div></td></tr>
+                <tr><th>游戏引擎</th><td><div class="skill-tags"><span class="skill-tag">CocosCreator</span><span class="skill-tag">Cocos2dx</span></div></td></tr>
+                <tr><th>其他框架</th><td><div class="skill-tags"><span class="skill-tag">Angular</span><span class="skill-tag">Egret</span></div></td></tr>
+                <tr><th>移动开发</th><td><div class="skill-tags"><span class="skill-tag">Android SDK</span><span class="skill-tag">iOS SDK</span></div></td></tr>
+            </table>
+        </section>
+
+        <!-- AI技能 -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79s7.15 2.71 9.88 0C18.32 15.65 19 14.08 19 12.1h2c0 1.98-.88 4.55-2.64 6.29-3.51 3.48-9.21 3.48-12.72 0-3.5-3.47-3.53-9.11-.02-12.58s9.14-3.47 12.65 0L21 3v7.12zM12.5 8v4.25l3.5 2.08-.72 1.21L11 13V8h1.5z"/></svg>
+                AI技能与工具
+            </h2>
+            <div class="ai-grid">
+                <div class="ai-card">
+                    <h4>AI辅助开发与自动化</h4>
+                    <ul>
+                        <li><strong>Claude生态系统</strong>：熟练配置和使用 Claude Code CLI 及 VSCode 插件 Cline</li>
+                        <li><strong>MCP架构精通</strong>：高效配置、部署MCP服务器（chrome-devtools、playwright、Pencil等）</li>
+                        <li><strong>Claude高级特性</strong>：自定义命令、Custom Agent配置与Skills开发</li>
+                    </ul>
+                </div>
+                <div class="ai-card">
+                    <h4>主流编码模型实战</h4>
+                    <div class="model-grid">
+                        <div class="model-item"><div class="vendor">Anthropic</div><div class="models">Claude Haiku / Sonnet / Opus</div></div>
+                        <div class="model-item"><div class="vendor">Google</div><div class="models">Gemini 3</div></div>
+                        <div class="model-item"><div class="vendor">OpenAI</div><div class="models">GPT-5</div></div>
+                        <div class="model-item"><div class="vendor">国产模型</div><div class="models">Kimi K2.5 / GLM-4.7 / MiniMax / Qwen3</div></div>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 15px; padding: 12px; background: var(--bg); border-radius: 8px; color: var(--text-light); font-size: 0.9rem; border-left: 3px solid var(--accent);">
+                能够根据不同场景选择最优模型，最大化编码效率与解决方案质量
+            </p>
+        </section>
+
+        <!-- 工作经历 -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                工作经历
+            </h2>
+            <div class="timeline">
+                <!-- 天堰科技 -->
+                <div class="timeline-item current">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">前端开发工程师</span>
+                            <span class="job-company"> @ 天津天堰科技股份有限公司</span>
+                        </div>
+                        <span class="job-date">2021.10 - 至今</span>
+                    </div>
+                    <div class="job-achievement">
+                        <strong>核心业绩：</strong>中西医临床思维项目年销售额1000万+，VR项目销售额数百万，野战救护所、慢病思维、用户中心均已交付上线
+                    </div>
+                    <ul class="job-list">
+                        <li>【2025-2026】主导<span class="highlight">临床思维4.2改版</span><span class="badge">已上线</span>，完成全平台界面翻新、AI功能集成（语音问诊、AI伴学、AI评价、AI生成病例）、扫码登录、二维码分享等核心功能</li>
+                        <li>【2025】使用 Vue3 + TypeScript + Vite + Pinia 开发<span class="highlight">老年慢病诊疗思维训练系统</span><span class="badge">已上线</span>，集成DICOM医学影像查看器、ECharts数据可视化、AI辅助诊断等功能</li>
+                        <li>使用 Vue3 + Three.js 开发多个3D医疗模拟项目（野战救护所<span class="badge">已交付</span>、批量伤员救治系统）</li>
+                        <li>负责VR项目3D场景搭建、模型管理、灯光控制、动画播放、交互设计等全流程</li>
+                        <li>使用 Angular + Vue 维护中西医临床思维Web端项目</li>
+                        <li>对接模型外包公司，制定输出标准，把控模型品质</li>
+                    </ul>
+                </div>
+
+                <!-- 古阳广告 -->
+                <div class="timeline-item">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">CocosCreator开发工程师</span>
+                            <span class="job-company"> @ 天津古阳广告设计有限公司</span>
+                        </div>
+                        <span class="job-date">2021.01 - 2021.09</span>
+                    </div>
+                    <div class="job-achievement">
+                        <strong>核心业绩：</strong>完成暑期小学语文7个讲次课件开发，已上线推广使用
+                    </div>
+                    <ul class="job-list">
+                        <li>使用 CocosCreator + TypeScript 开发在线教育网课课件</li>
+                        <li>使用 Vue + VueX + Router 二次开发迈格森教师端项目</li>
+                        <li>负责部门新人培训、管理制度整理、周会主持</li>
+                    </ul>
+                </div>
+
+                <!-- 集智创研 -->
+                <div class="timeline-item">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">COCOS2DX开发</span>
+                            <span class="job-company"> @ 天津集智创研科技有限公司</span>
+                        </div>
+                        <span class="job-date">2019.02 - 2020.12</span>
+                    </div>
+                    <div class="job-achievement">
+                        <strong>核心业绩：</strong>2019年8省棋牌项目流水6000万
+                    </div>
+                    <ul class="job-list">
+                        <li>使用 Cocos2d-X 维护8个地区棋牌项目（麻将、斗地主、字牌等）</li>
+                        <li>负责iOS/Android双端SDK集成（登录、支付、分享、语音、广告）</li>
+                        <li>客户端打包、热更新、签名更换等运维工作</li>
+                        <li>开发环境升级（Xcode9→11，Eclipse→AndroidStudio）</li>
+                    </ul>
+                </div>
+
+                <!-- 宏诚盛世 -->
+                <div class="timeline-item">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">COCOS2DX（项目管理+技术开发）</span>
+                            <span class="job-company"> @ 宏诚盛世（天津）网络科技有限公司</span>
+                        </div>
+                        <span class="job-date">2017.11 - 2018.11</span>
+                    </div>
+                    <ul class="job-list">
+                        <li>承担设计开发阶段项目管理，制定开发计划并保证按期交付</li>
+                        <li>负责手游脚本开发，与UI、策划协作确定功能方案</li>
+                        <li>团队建设：制定员工奖惩制度、月最佳评选机制</li>
+                    </ul>
+                </div>
+
+                <!-- 雅讯时空 -->
+                <div class="timeline-item">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">COCOS2DX</span>
+                            <span class="job-company"> @ 天津雅讯时空科技发展有限公司</span>
+                        </div>
+                        <span class="job-date">2015.10 - 2016.12</span>
+                    </div>
+                    <ul class="job-list">
+                        <li><strong>足球经理手游</strong>：完全自主研发，包含PVP、PVE、联赛、商城、好友、排行榜、转会市场等系统</li>
+                        <li><strong>魔力乐消消</strong>：三消类游戏，参考best friends等进行玩法创新</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 早期经历 -->
+            <h3 style="margin: 25px 0 15px; font-size: 1rem; color: var(--text-light);">早期工作经历（2009 - 2015）</h3>
+            <table class="early-table">
+                <thead>
+                    <tr><th>时间</th><th>公司</th><th>职位</th><th>主要成果</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>2014.11-2015.10</td><td>天津虫象科技</td><td>Flash开发</td><td>研发部日常管理、培训计划制定</td></tr>
+                    <tr><td>2012.03-2014.05</td><td>摩卡软件</td><td>Flash开发</td><td>流程控制软件、监控管理软件</td></tr>
+                    <tr><td>2011.11-2012.03</td><td>天津象形科技</td><td>Flash开发</td><td>BS结构网络游戏开发</td></tr>
+                    <tr><td>2010.06-2011.11</td><td>天津企商科技</td><td>Flash开发</td><td><strong>真人试衣系统</strong>（已获软件著作权）</td></tr>
+                    <tr><td>2009.04-2010.05</td><td>天津安信天诚</td><td>Flash开发</td><td>SNS网站Flash游戏开发</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 代表项目 -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                代表项目
+            </h2>
+            <div class="project-grid">
+                <!-- 项目1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-name">1. 临床思维4.2改版 <span class="badge">已上线</span></span>
+                        <span class="project-date">2025.09 - 2026.01</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Vue3</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">AI集成</span>
+                    </div>
+                    <p class="project-desc">对临床思维平台进行全面升级改版</p>
+                    <ul class="project-features">
+                        <li>界面翻新：登录页、首页、病例列表、创建考试/练习、学生端作答界面</li>
+                        <li>AI功能：AI语音问诊、AI伴学、AI评价、AI小助手、AI生成病例</li>
+                        <li>新功能：扫码登录、病例二维码分享、开放病例直接练习</li>
+                        <li>用户中心：单位管理、订单管理、自定义导入用户 <span class="badge">已上线</span></li>
+                    </ul>
+                </div>
+
+                <!-- 项目2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-name">2. 老年慢病诊疗思维训练系统 <span class="badge">已上线</span></span>
+                        <span class="project-date">2025.06 - 2025.12</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Vue3</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Vite</span>
+                        <span class="tech-tag">Pinia</span>
+                        <span class="tech-tag">Element Plus</span>
+                    </div>
+                    <p class="project-desc">医学教育平台，专注于慢性病诊疗思维训练</p>
+                    <ul class="project-features">
+                        <li>包含病史采集、体格检查、诊断推理、治疗计划、医患沟通等模块</li>
+                        <li>集成Cornerstone.js DICOM医学影像查看器</li>
+                        <li>ECharts数据可视化、AI辅助诊断、富文本编辑器、PDF查看器</li>
+                    </ul>
+                </div>
+
+                <!-- 项目3 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-name">3. 野战救护所 <span class="badge">已交付</span></span>
+                        <span class="project-date">2023.06 - 2023.12</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Vue3</span>
+                        <span class="tech-tag">Three.js</span>
+                    </div>
+                    <p class="project-desc">3D军事医疗模拟系统，模拟军医在5种不同环境下对不同类型伤员进行救治的过程</p>
+                </div>
+
+                <!-- 项目4 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-name">4. 批量伤员海警定制版</span>
+                        <span class="project-date">2024.01 - 2024.06</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Vue3</span>
+                        <span class="tech-tag">Three.js</span>
+                    </div>
+                    <p class="project-desc">3D军事医疗模拟系统，模拟5种环境下的伤员救治流程</p>
+                    <ul class="project-features">
+                        <li>60种伤情自由组合，学习/考试双模式</li>
+                    </ul>
+                </div>
+
+                <!-- 项目5 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-name">5. 中西医临床思维 + VR版 <span class="badge">已上线</span></span>
+                        <span class="project-date">2021.10 - 2023.07</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Angular</span>
+                        <span class="tech-tag">Vue</span>
+                        <span class="tech-tag">Three.js</span>
+                    </div>
+                    <p class="project-desc">模拟门诊医生完整诊疗流程（问诊→检查→诊断→治疗）</p>
+                    <ul class="project-features">
+                        <li>年销售额1000万+，VR版销售额数百万</li>
+                    </ul>
+                </div>
+
+                <!-- 项目6 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-name">6. 棋牌项目矩阵</span>
+                        <span class="project-date">2019.02 - 2020.05</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Cocos2dx</span>
+                        <span class="tech-tag">Lua</span>
+                    </div>
+                    <p class="project-desc">覆盖8省的棋牌游戏矩阵，包含麻将、斗地主、跑得快等</p>
+                    <ul class="project-features">
+                        <li>2019年流水6000万，月流水稳定500万+</li>
+                    </ul>
+                </div>
+
+                <!-- 项目7 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-name">7. 真人试衣系统</span>
+                        <span class="project-date">2010.06 - 2011.11</span>
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Flash</span>
+                        <span class="tech-tag">FLARToolKit</span>
+                        <span class="tech-tag">人脸识别</span>
+                    </div>
+                    <p class="project-desc">基于摄像头的AR试衣应用，支持PC/MAC</p>
+                    <ul class="project-features">
+                        <li>已获1项发明专利、6项实用新型专利、1项外观设计专利</li>
+                        <li>已获1项软件著作权</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 教育背景 -->
+        <section class="section">
+            <h2 class="section-title">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                教育背景
+            </h2>
+            <div class="edu-card">
+                <div class="edu-icon">
+                    <svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+                </div>
+                <div class="edu-info">
+                    <h4>民办天狮职业技术学院</h4>
+                    <p>大专 | 工商管理 | 2003 - 2006</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 高佳顺 | 前端开发工程师 | 本简历使用 HTML/CSS 手工制作</p>
+    </footer>
+</body>
+</html>
